@@ -1,0 +1,5 @@
+# Downloaded media (large binaries, not source)
+Downloader/downloads/
+
+# macOS junk
+.DS_Store
