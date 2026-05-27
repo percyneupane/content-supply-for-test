@@ -114,7 +114,7 @@ def ensure_profile(session: requests.Session, base: str, token: str, username: s
     """Creates a profile only if the account doesn't already have one."""
 
     me = session.get(
-        f"{base}/profile/me",
+        f"{base}/users/me",
         headers={"Authorization": f"Bearer {token}"},
         timeout=API_TIMEOUT_SECONDS,
     )

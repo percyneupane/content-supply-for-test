@@ -340,9 +340,12 @@ def download_with_ytdlp(url: str, video):
         "yt-dlp",
         url,
 
-        # Best available TikTok video.
+        # Prefer the best H.264 stream, which reliably carries audio on TikTok.
+        # TikTok's higher-res H.265 (bytevc1) streams advertise aac but often
+        # download video-only (silent), and there are no separate audio streams
+        # to merge. H.264 tops out around 540p but always includes audio.
         "-f",
-        "best",
+        "b[vcodec^=h264]/b",
 
         "--merge-output-format",
         "mp4",
