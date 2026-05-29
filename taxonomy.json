@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "note": "Single source of truth for categories, topics, and TikTok curation rules. 'hashtags' drive discovery (no # symbol); 'keywords' gate the filter (matched word-boundary, case-insensitive, against title + description). Both are first-pass guesses; edit freely. Slugs must stay in sync with the Loorio seed.",
+  "categories": [
+    {
+      "name": "Test Prep & School",
+      "slug": "test-prep-school",
+      "topics": [
+        { "name": "SAT Reading & Writing", "slug": "sat-reading-writing", "hashtags": ["satprep", "satreading", "satenglish", "digitalsat", "satwriting"], "keywords": ["sat reading", "sat writing", "sat english", "digital sat", "sat verbal"] },
+        { "name": "SAT Math", "slug": "sat-math", "hashtags": ["satmath", "satprep", "digitalsat", "mathsat", "satscores"], "keywords": ["sat math", "digital sat", "sat exam", "math section", "sat prep"] },
+        { "name": "ACT Prep", "slug": "act-prep", "hashtags": ["actprep", "acttest", "acttips", "actexam", "collegeprep"], "keywords": ["act prep", "act test", "act exam", "act score", "act english"] },
+        { "name": "AP Courses", "slug": "ap-courses", "hashtags": ["apexams", "apclasses", "aptest", "advancedplacement", "apstudy"], "keywords": ["ap exam", "ap class", "ap test", "advanced placement", "ap score"] },
+        { "name": "College Applications", "slug": "college-applications", "hashtags": ["collegeapplications", "collegeadmissions", "commonapp", "collegeessay", "applicationtips"], "keywords": ["college application", "college admissions", "common app", "college essay", "admissions"] },
+        { "name": "Scholarships & Financial Aid", "slug": "scholarships-financial-aid", "hashtags": ["scholarships", "financialaid", "fafsa", "collegegrants", "scholarshiptips"], "keywords": ["scholarship", "financial aid", "fafsa", "grant", "tuition"] },
+        { "name": "Exam Strategies", "slug": "exam-strategies", "hashtags": ["examtips", "testtaking", "examprep", "examstrategy", "studytips"], "keywords": ["exam tips", "test taking", "exam strategy", "test strategy", "exam prep"] },
+        { "name": "School Study Tips", "slug": "school-study-tips", "hashtags": ["studytips", "studytok", "studymotivation", "studyhacks", "schooltips"], "keywords": ["study tips", "study hacks", "studying", "study routine", "study motivation"] }
+      ]
+    },
+    {
+      "name": "Mathematics",
+      "slug": "mathematics",
+      "topics": [
+        { "name": "Math Foundations", "slug": "math-foundations", "hashtags": ["mathbasics", "learnmath", "mathtok", "mathhelp", "mathematics"], "keywords": ["math basics", "learn math", "arithmetic", "fractions", "mathematics"] },
+        { "name": "Algebra", "slug": "algebra", "hashtags": ["algebra", "algebrahelp", "algebra2", "learnalgebra", "mathtok"], "keywords": ["algebra", "equation", "polynomial", "quadratic", "variable"] },
+        { "name": "Geometry", "slug": "geometry", "hashtags": ["geometry", "geometryhelp", "geometrymath", "mathtok"], "keywords": ["geometry", "triangle", "angle", "theorem", "circle"] },
+        { "name": "Trigonometry", "slug": "trigonometry", "hashtags": ["trigonometry", "trig", "trighelp", "mathtok"], "keywords": ["trigonometry", "trig", "sine", "cosine", "tangent"] },
+        { "name": "Calculus", "slug": "calculus", "hashtags": ["calculus", "calc", "calculushelp", "calculus2", "mathtok"], "keywords": ["calculus", "derivative", "integral", "limit", "differentiation"] },
+        { "name": "Linear Algebra", "slug": "linear-algebra", "hashtags": ["linearalgebra", "matrices", "linalg", "mathtok"], "keywords": ["linear algebra", "matrix", "matrices", "vector", "eigenvalue"] },
+        { "name": "Statistics & Probability", "slug": "statistics-probability", "hashtags": ["statistics", "probability", "statstok", "statshelp", "datastats"], "keywords": ["statistics", "probability", "standard deviation", "distribution", "mean"] },
+        { "name": "Discrete Mathematics", "slug": "discrete-mathematics", "hashtags": ["discretemath", "combinatorics", "graphtheory", "mathtok"], "keywords": ["discrete math", "combinatorics", "graph theory", "set theory", "permutation"] },
+        { "name": "Math Puzzles & Problem Solving", "slug": "math-puzzles-problem-solving", "hashtags": ["mathpuzzles", "mathproblems", "problemsolving", "mathriddles", "mathchallenge"], "keywords": ["math puzzle", "math problem", "problem solving", "math riddle", "brain teaser"] }
+      ]
+    },
+    {
+      "name": "Science",
+      "slug": "science",
+      "topics": [
+        { "name": "Science Foundations", "slug": "science-foundations", "hashtags": ["science", "sciencetok", "learnscience", "sciencefacts"], "keywords": ["science", "scientific method", "science facts", "experiment"] },
+        { "name": "Physics", "slug": "physics", "hashtags": ["physics", "physicstok", "physicsfun", "learnphysics", "physicsfacts"], "keywords": ["physics", "force", "gravity", "energy", "quantum"] },
+        { "name": "Chemistry", "slug": "chemistry", "hashtags": ["chemistry", "chemistrytok", "chemtok", "chemistryfun", "learnchemistry"], "keywords": ["chemistry", "chemical", "molecule", "reaction", "periodic table"] },
+        { "name": "Biology", "slug": "biology", "hashtags": ["biology", "biologytok", "biofacts", "learnbiology", "biologyclass"], "keywords": ["biology", "cell", "dna", "organism", "evolution"] },
+        { "name": "Astronomy & Space", "slug": "astronomy-space", "hashtags": ["astronomy", "space", "spacetok", "astrophysics", "cosmos"], "keywords": ["astronomy", "space", "planet", "galaxy", "universe"] },
+        { "name": "Earth Science", "slug": "earth-science", "hashtags": ["earthscience", "geology", "earthfacts", "planetearth"], "keywords": ["earth science", "geology", "volcano", "plate tectonics", "rock"] },
+        { "name": "Environmental Science", "slug": "environmental-science", "hashtags": ["environmentalscience", "climatescience", "ecology", "sustainability", "environment"], "keywords": ["environmental science", "climate", "ecosystem", "ecology", "sustainability"] },
+        { "name": "Scientific Experiments", "slug": "scientific-experiments", "hashtags": ["scienceexperiment", "experiments", "sciencefun", "labexperiment", "stem"], "keywords": ["experiment", "science experiment", "lab", "reaction", "demonstration"] },
+        { "name": "Science History", "slug": "science-history", "hashtags": ["sciencehistory", "historyofscience", "sciencefacts", "famousscientists"], "keywords": ["history of science", "scientist", "discovery", "newton", "einstein"] }
+      ]
+    },
+    {
+      "name": "Computer Science",
+      "slug": "computer-science",
+      "topics": [
+        { "name": "Programming Fundamentals", "slug": "programming-fundamentals", "hashtags": ["programming", "learntocode", "coding", "codingtok", "programmingbasics"], "keywords": ["programming", "coding", "learn to code", "programmer", "code"] },
+        { "name": "Data Structures", "slug": "data-structures", "hashtags": ["datastructures", "dsa", "datastructuresandalgorithms", "codinginterview", "leetcode"], "keywords": ["data structure", "array", "linked list", "hash table", "binary tree"] },
+        { "name": "Algorithms", "slug": "algorithms", "hashtags": ["algorithms", "dsa", "leetcode", "codinginterview", "computerscience"], "keywords": ["algorithm", "sorting", "big o", "recursion", "dynamic programming"] },
+        { "name": "Computer Systems", "slug": "computer-systems", "hashtags": ["computerscience", "computerarchitecture", "howcomputerswork", "cs"], "keywords": ["computer architecture", "cpu", "binary", "how computers work", "memory"] },
+        { "name": "Operating Systems", "slug": "operating-systems", "hashtags": ["operatingsystems", "linux", "os", "computerscience"], "keywords": ["operating system", "linux", "kernel", "process", "scheduling"] },
+        { "name": "Databases", "slug": "databases", "hashtags": ["databases", "sql", "database", "dbms", "learnsql"], "keywords": ["database", "sql", "query", "relational", "table"] },
+        { "name": "Computer Networks", "slug": "computer-networks", "hashtags": ["computernetworking", "networking", "ccna", "networktok", "computerscience"], "keywords": ["networking", "network", "tcp", "ip address", "router"] },
+        { "name": "Software Engineering", "slug": "software-engineering", "hashtags": ["softwareengineering", "softwaredeveloper", "coding", "devlife", "programming"], "keywords": ["software engineering", "software developer", "clean code", "git", "agile"] },
+        { "name": "Programming Languages", "slug": "programming-languages", "hashtags": ["programming", "python", "javascript", "coding", "learntocode"], "keywords": ["python", "javascript", "programming language", "syntax", "compiler"] }
+      ]
+    },
+    {
+      "name": "AI & Data",
+      "slug": "ai-data",
+      "topics": [
+        { "name": "Artificial Intelligence", "slug": "artificial-intelligence", "hashtags": ["artificialintelligence", "ai", "aitok", "machinelearning", "aitools"], "keywords": ["artificial intelligence", "ai model", "ai tool", "machine intelligence", "ai"] },
+        { "name": "Machine Learning", "slug": "machine-learning", "hashtags": ["machinelearning", "ml", "datascience", "ai", "deeplearning"], "keywords": ["machine learning", "model training", "prediction", "supervised", "algorithm"] },
+        { "name": "Deep Learning", "slug": "deep-learning", "hashtags": ["deeplearning", "neuralnetworks", "machinelearning", "ai", "datascience"], "keywords": ["deep learning", "neural network", "neural net", "backpropagation", "tensorflow"] },
+        { "name": "Generative AI", "slug": "generative-ai", "hashtags": ["generativeai", "genai", "chatgpt", "aiart", "llm"], "keywords": ["generative ai", "chatgpt", "llm", "gpt", "ai art"] },
+        { "name": "Data Science", "slug": "data-science", "hashtags": ["datascience", "datascientist", "dataanalytics", "python", "machinelearning"], "keywords": ["data science", "data scientist", "dataset", "analytics", "pandas"] },
+        { "name": "Data Analysis", "slug": "data-analysis", "hashtags": ["dataanalysis", "dataanalytics", "dataanalyst", "excel", "sql"], "keywords": ["data analysis", "data analytics", "data analyst", "excel", "spreadsheet"] },
+        { "name": "Data Visualization", "slug": "data-visualization", "hashtags": ["datavisualization", "dataviz", "tableau", "datavisualisation", "charts"], "keywords": ["data visualization", "dataviz", "chart", "graph", "tableau"] },
+        { "name": "AI Ethics", "slug": "ai-ethics", "hashtags": ["aiethics", "responsibleai", "aisafety", "techethics", "ai"], "keywords": ["ai ethics", "responsible ai", "ai safety", "ai bias", "ai regulation"] },
+        { "name": "Prompt Engineering", "slug": "prompt-engineering", "hashtags": ["promptengineering", "chatgpt", "aiprompts", "prompts", "generativeai"], "keywords": ["prompt engineering", "prompt", "chatgpt", "ai prompt", "prompting"] }
+      ]
+    },
+    {
+      "name": "Technology",
+      "slug": "technology",
+      "topics": [
+        { "name": "Tech Foundations", "slug": "tech-foundations", "hashtags": ["technology", "techtok", "tech", "technews", "techbasics"], "keywords": ["technology", "tech", "tech news", "gadget", "tech basics"] },
+        { "name": "Consumer Tech", "slug": "consumer-tech", "hashtags": ["consumertech", "gadgets", "techreview", "techtok", "smartphone"], "keywords": ["consumer tech", "gadget", "smartphone", "tech review", "iphone"] },
+        { "name": "Cybersecurity", "slug": "cybersecurity", "hashtags": ["cybersecurity", "infosec", "ethicalhacking", "cybersecuritytips", "hacking"], "keywords": ["cybersecurity", "hacking", "hacker", "security", "malware"] },
+        { "name": "Cloud Computing", "slug": "cloud-computing", "hashtags": ["cloudcomputing", "aws", "azure", "cloud", "devops"], "keywords": ["cloud computing", "aws", "azure", "cloud", "server"] },
+        { "name": "DevOps", "slug": "devops", "hashtags": ["devops", "kubernetes", "docker", "cicd", "cloudcomputing"], "keywords": ["devops", "kubernetes", "docker", "ci/cd", "deployment"] },
+        { "name": "Hardware & Chips", "slug": "hardware-chips", "hashtags": ["hardware", "semiconductors", "pcbuild", "computerhardware", "chips"], "keywords": ["hardware", "chip", "semiconductor", "processor", "gpu"] },
+        { "name": "Robotics", "slug": "robotics", "hashtags": ["robotics", "robots", "robot", "automation", "engineering"], "keywords": ["robotics", "robot", "automation", "actuator", "humanoid"] },
+        { "name": "AR, VR & Spatial Computing", "slug": "ar-vr-spatial-computing", "hashtags": ["vr", "ar", "virtualreality", "augmentedreality", "spatialcomputing"], "keywords": ["virtual reality", "augmented reality", "vr", "ar", "headset"] },
+        { "name": "Tech History", "slug": "tech-history", "hashtags": ["techhistory", "historyoftech", "retrotech", "computinghistory"], "keywords": ["tech history", "history of technology", "retro tech", "vintage computer"] }
+      ]
+    },
+    {
+      "name": "Finance & Economics",
+      "slug": "finance-economics",
+      "topics": [
+        { "name": "Personal Finance", "slug": "personal-finance", "hashtags": ["personalfinance", "finance", "financetok", "moneytok", "financialliteracy"], "keywords": ["personal finance", "money", "financial literacy", "financial freedom", "wealth"] },
+        { "name": "Budgeting & Saving", "slug": "budgeting-saving", "hashtags": ["budgeting", "budget", "savingmoney", "moneysaving", "budgettips"], "keywords": ["budget", "budgeting", "saving money", "save money", "emergency fund"] },
+        { "name": "Investing Basics", "slug": "investing-basics", "hashtags": ["investing", "investingforbeginners", "investing101", "stockmarket", "finance"], "keywords": ["investing", "investment", "invest", "compound interest", "portfolio"] },
+        { "name": "Stocks & ETFs", "slug": "stocks-etfs", "hashtags": ["stocks", "stockmarket", "etf", "investing", "stocktok"], "keywords": ["stock", "stock market", "etf", "index fund", "dividend"] },
+        { "name": "Crypto & Blockchain", "slug": "crypto-blockchain", "hashtags": ["crypto", "cryptocurrency", "bitcoin", "blockchain", "ethereum"], "keywords": ["crypto", "cryptocurrency", "bitcoin", "blockchain", "ethereum"] },
+        { "name": "Macroeconomics", "slug": "macroeconomics", "hashtags": ["macroeconomics", "economics", "econ", "economy", "economicstok"], "keywords": ["macroeconomics", "inflation", "gdp", "interest rate", "economy"] },
+        { "name": "Microeconomics", "slug": "microeconomics", "hashtags": ["microeconomics", "economics", "econ", "supplyanddemand"], "keywords": ["microeconomics", "supply and demand", "market", "price", "competition"] },
+        { "name": "Accounting Basics", "slug": "accounting-basics", "hashtags": ["accounting", "accountant", "accountingbasics", "bookkeeping", "finance"], "keywords": ["accounting", "balance sheet", "bookkeeping", "income statement", "ledger"] },
+        { "name": "Taxes & Credit", "slug": "taxes-credit", "hashtags": ["taxes", "taxtips", "creditscore", "credit", "taxseason"], "keywords": ["taxes", "tax", "credit score", "deduction", "irs"] }
+      ]
+    },
+    {
+      "name": "Business & Startups",
+      "slug": "business-startups",
+      "topics": [
+        { "name": "Entrepreneurship", "slug": "entrepreneurship", "hashtags": ["entrepreneur", "entrepreneurship", "businesstok", "smallbusiness", "entrepreneurlife"], "keywords": ["entrepreneur", "entrepreneurship", "small business", "business owner", "side hustle"] },
+        { "name": "Startups", "slug": "startups", "hashtags": ["startup", "startups", "founder", "startuplife", "techstartup"], "keywords": ["startup", "founder", "mvp", "product market fit", "tech startup"] },
+        { "name": "Venture Capital", "slug": "venture-capital", "hashtags": ["venturecapital", "vc", "startupfunding", "fundraising", "angelinvestor"], "keywords": ["venture capital", "vc", "funding", "fundraising", "angel investor"] },
+        { "name": "Marketing", "slug": "marketing", "hashtags": ["marketing", "digitalmarketing", "marketingtips", "socialmediamarketing", "marketingstrategy"], "keywords": ["marketing", "digital marketing", "brand", "advertising", "campaign"] },
+        { "name": "Sales", "slug": "sales", "hashtags": ["sales", "salestips", "salestraining", "b2bsales", "salesmotivation"], "keywords": ["sales", "selling", "sales pitch", "closing", "prospect"] },
+        { "name": "Product Management", "slug": "product-management", "hashtags": ["productmanagement", "productmanager", "pmtok", "productdevelopment", "tech"], "keywords": ["product management", "product manager", "roadmap", "feature", "product"] },
+        { "name": "Business Strategy", "slug": "business-strategy", "hashtags": ["businessstrategy", "business", "strategy", "businesstips", "businessgrowth"], "keywords": ["business strategy", "strategy", "competitive advantage", "business model", "growth"] },
+        { "name": "Operations", "slug": "operations", "hashtags": ["operations", "businessoperations", "supplychain", "opsmanagement", "logistics"], "keywords": ["operations", "supply chain", "logistics", "process", "efficiency"] },
+        { "name": "Leadership & Management", "slug": "leadership-management", "hashtags": ["leadership", "management", "leadershiptips", "managementtips", "leader"], "keywords": ["leadership", "management", "leader", "manager", "team"] }
+      ]
+    },
+    {
+      "name": "Engineering",
+      "slug": "engineering",
+      "topics": [
+        { "name": "Engineering Foundations", "slug": "engineering-foundations", "hashtags": ["engineering", "engineeringtok", "engineer", "stem", "engineeringbasics"], "keywords": ["engineering", "engineer", "stem", "design", "problem solving"] },
+        { "name": "Mechanical Engineering", "slug": "mechanical-engineering", "hashtags": ["mechanicalengineering", "mechanical", "mecheng", "machines", "engineering"], "keywords": ["mechanical engineering", "mechanical", "machine", "gear", "engine"] },
+        { "name": "Electrical Engineering", "slug": "electrical-engineering", "hashtags": ["electricalengineering", "electronics", "electrical", "circuits", "engineering"], "keywords": ["electrical engineering", "circuit", "electronics", "voltage", "current"] },
+        { "name": "Civil Engineering", "slug": "civil-engineering", "hashtags": ["civilengineering", "construction", "structuralengineering", "civil", "engineering"], "keywords": ["civil engineering", "construction", "structural", "bridge", "concrete"] },
+        { "name": "Aerospace Engineering", "slug": "aerospace-engineering", "hashtags": ["aerospaceengineering", "aerospace", "aviation", "rockets", "engineering"], "keywords": ["aerospace", "aviation", "rocket", "aircraft", "propulsion"] },
+        { "name": "Chemical Engineering", "slug": "chemical-engineering", "hashtags": ["chemicalengineering", "chemeng", "chemistry", "process", "engineering"], "keywords": ["chemical engineering", "process", "reactor", "distillation", "chemical"] },
+        { "name": "Materials Science", "slug": "materials-science", "hashtags": ["materialsscience", "materials", "metallurgy", "engineering", "science"], "keywords": ["materials science", "material", "metallurgy", "alloy", "composite"] },
+        { "name": "Energy Systems", "slug": "energy-systems", "hashtags": ["energy", "renewableenergy", "energysystems", "solarenergy", "cleanenergy"], "keywords": ["energy", "renewable energy", "solar", "wind power", "power grid"] },
+        { "name": "How Things Work", "slug": "how-things-work", "hashtags": ["howitsmade", "howthingswork", "engineering", "science", "satisfying"], "keywords": ["how it's made", "how things work", "how it works", "mechanism", "engineering"] }
+      ]
+    },
+    {
+      "name": "Language & Communication",
+      "slug": "language-communication",
+      "topics": [
+        { "name": "English", "slug": "english", "hashtags": ["learnenglish", "english", "englishgrammar", "speakenglish", "esl"], "keywords": ["learn english", "english", "esl", "english speaking", "pronunciation"] },
+        { "name": "Spanish", "slug": "spanish", "hashtags": ["learnspanish", "spanish", "spanishclass", "espanol", "spanishlessons"], "keywords": ["learn spanish", "spanish", "español", "spanish word", "spanish phrase"] },
+        { "name": "French", "slug": "french", "hashtags": ["learnfrench", "french", "frenchclass", "francais", "frenchlessons"], "keywords": ["learn french", "french", "français", "french word", "french phrase"] },
+        { "name": "Mandarin", "slug": "mandarin", "hashtags": ["learnchinese", "mandarin", "chinese", "chineselanguage", "mandarinchinese"], "keywords": ["learn chinese", "mandarin", "chinese", "chinese character", "pinyin"] },
+        { "name": "Japanese", "slug": "japanese", "hashtags": ["learnjapanese", "japanese", "japaneselanguage", "nihongo", "japaneselessons"], "keywords": ["learn japanese", "japanese", "nihongo", "hiragana", "kanji"] },
+        { "name": "Grammar", "slug": "grammar", "hashtags": ["grammar", "grammartips", "englishgrammar", "grammarmistakes", "writing"], "keywords": ["grammar", "grammatical", "sentence", "tense", "punctuation"] },
+        { "name": "Vocabulary", "slug": "vocabulary", "hashtags": ["vocabulary", "vocab", "wordoftheday", "learnenglish", "englishvocabulary"], "keywords": ["vocabulary", "vocab", "word", "word of the day", "definition"] },
+        { "name": "Public Speaking", "slug": "public-speaking", "hashtags": ["publicspeaking", "speakingtips", "communication", "presentationskills", "confidence"], "keywords": ["public speaking", "speech", "presentation", "communication", "confidence"] },
+        { "name": "Linguistics", "slug": "linguistics", "hashtags": ["linguistics", "language", "languages", "linguistok", "etymology"], "keywords": ["linguistics", "language", "etymology", "phonetics", "dialect"] }
+      ]
+    },
+    {
+      "name": "History",
+      "slug": "history",
+      "topics": [
+        { "name": "World History", "slug": "world-history", "hashtags": ["worldhistory", "history", "historytok", "historyfacts", "historytime"], "keywords": ["world history", "history", "historical", "empire", "civilization"] },
+        { "name": "Ancient Civilizations", "slug": "ancient-civilizations", "hashtags": ["ancienthistory", "ancientcivilizations", "archaeology", "ancientegypt", "rome"], "keywords": ["ancient", "ancient egypt", "rome", "mesopotamia", "archaeology"] },
+        { "name": "Medieval History", "slug": "medieval-history", "hashtags": ["medievalhistory", "medieval", "middleages", "knights", "history"], "keywords": ["medieval", "middle ages", "knight", "castle", "feudal"] },
+        { "name": "Modern History", "slug": "modern-history", "hashtags": ["modernhistory", "20thcentury", "worldwar", "coldwar", "history"], "keywords": ["modern history", "20th century", "world war", "cold war", "industrial revolution"] },
+        { "name": "US History", "slug": "us-history", "hashtags": ["ushistory", "americanhistory", "usa", "americanrevolution", "history"], "keywords": ["us history", "american history", "american revolution", "civil war", "founding fathers"] },
+        { "name": "Military History", "slug": "military-history", "hashtags": ["militaryhistory", "war", "worldwar2", "military", "history"], "keywords": ["military history", "war", "battle", "world war", "army"] },
+        { "name": "History of Ideas", "slug": "history-of-ideas", "hashtags": ["historyofideas", "intellectualhistory", "philosophy", "history"], "keywords": ["history of ideas", "intellectual history", "enlightenment", "revolution", "philosophy"] },
+        { "name": "Historical Biographies", "slug": "historical-biographies", "hashtags": ["historicalfigures", "biography", "historicalbiography", "history"], "keywords": ["biography", "historical figure", "legacy", "born in", "life of"] },
+        { "name": "Cultural History", "slug": "cultural-history", "hashtags": ["culturalhistory", "culture", "historyfacts", "history"], "keywords": ["cultural history", "culture", "tradition", "customs", "society"] }
+      ]
+    },
+    {
+      "name": "Society & Politics",
+      "slug": "society-politics",
+      "topics": [
+        { "name": "Government & Civics", "slug": "government-civics", "hashtags": ["civics", "government", "politics", "howgovernmentworks", "civicseducation"], "keywords": ["civics", "government", "constitution", "democracy", "congress"] },
+        { "name": "Political Systems", "slug": "political-systems", "hashtags": ["politicalscience", "politics", "government", "democracy", "politicalsystems"], "keywords": ["political system", "political science", "democracy", "authoritarian", "government"] },
+        { "name": "Current Affairs Explained", "slug": "current-affairs-explained", "hashtags": ["currentaffairs", "news", "newsexplained", "currentevents", "politics"], "keywords": ["current affairs", "news", "explained", "current events", "headline"] },
+        { "name": "International Relations", "slug": "international-relations", "hashtags": ["internationalrelations", "geopolitics", "globalpolitics", "foreignpolicy", "diplomacy"], "keywords": ["international relations", "geopolitics", "foreign policy", "diplomacy", "global"] },
+        { "name": "Sociology", "slug": "sociology", "hashtags": ["sociology", "society", "socialscience", "sociologyfacts", "socialtheory"], "keywords": ["sociology", "society", "social structure", "inequality", "social"] },
+        { "name": "Psychology", "slug": "psychology", "hashtags": ["psychology", "psychologyfacts", "psych", "psychologytok", "mentalhealth"], "keywords": ["psychology", "psychological", "behavior", "cognitive", "mind"] },
+        { "name": "Anthropology", "slug": "anthropology", "hashtags": ["anthropology", "culture", "humanorigins", "socialscience", "anthropologist"], "keywords": ["anthropology", "human origins", "culture", "tribe", "ethnography"] },
+        { "name": "Media Literacy", "slug": "media-literacy", "hashtags": ["medialiteracy", "fakenews", "criticalthinking", "misinformation", "media"], "keywords": ["media literacy", "fake news", "misinformation", "propaganda", "media bias"] },
+        { "name": "Law & Rights", "slug": "law-rights", "hashtags": ["law", "legaltok", "lawtok", "knowyourrights", "lawyer"], "keywords": ["law", "legal", "rights", "court", "constitution"] }
+      ]
+    },
+    {
+      "name": "Health & Human Body",
+      "slug": "health-human-body",
+      "topics": [
+        { "name": "Human Anatomy", "slug": "human-anatomy", "hashtags": ["anatomy", "humanbody", "anatomytok", "humananatomy", "medicalstudent"], "keywords": ["anatomy", "human body", "muscle", "skeleton", "organ"] },
+        { "name": "Nutrition Science", "slug": "nutrition-science", "hashtags": ["nutrition", "nutritiontips", "healthyeating", "nutritionist", "diet"], "keywords": ["nutrition", "diet", "protein", "calories", "healthy eating"] },
+        { "name": "Fitness & Training", "slug": "fitness-training", "hashtags": ["fitness", "workout", "gym", "fitnesstips", "training"], "keywords": ["fitness", "workout", "exercise", "gym", "training"] },
+        { "name": "Mental Health Education", "slug": "mental-health-education", "hashtags": ["mentalhealth", "mentalhealthawareness", "mentalhealthtips", "anxiety", "therapy"], "keywords": ["mental health", "anxiety", "depression", "therapy", "stress"] },
+        { "name": "Sleep & Recovery", "slug": "sleep-recovery", "hashtags": ["sleep", "sleeptips", "sleephygiene", "recovery", "rest"], "keywords": ["sleep", "sleep quality", "recovery", "rest", "circadian"] },
+        { "name": "Public Health", "slug": "public-health", "hashtags": ["publichealth", "healthcare", "epidemiology", "health", "prevention"], "keywords": ["public health", "epidemiology", "disease", "vaccine", "prevention"] },
+        { "name": "Neuroscience", "slug": "neuroscience", "hashtags": ["neuroscience", "brain", "neuroscientist", "neurons", "brainhealth"], "keywords": ["neuroscience", "brain", "neuron", "nervous system", "dopamine"] },
+        { "name": "Medicine Explained", "slug": "medicine-explained", "hashtags": ["medicine", "medicaltok", "medtok", "doctorsoftiktok", "medicalfacts"], "keywords": ["medicine", "medical", "disease", "symptom", "treatment"] },
+        { "name": "Health Myths", "slug": "health-myths", "hashtags": ["healthmyths", "mythbusting", "healthfacts", "debunked", "health"], "keywords": ["health myth", "myth", "debunked", "misconception", "truth about"] }
+      ]
+    }
+  ]
+}
