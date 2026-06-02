@@ -23,6 +23,11 @@ Old single-folder manifests still work via --path <folder> without --all.
 
 Local dev usage:
 
+
+    python3 upload.py --path ../Downloader/downloads/technology \
+      --email technology@loorio.com --password 12345678 \
+      --category "Technology" --all
+
     # Upload one topic folder:
     python upload.py --path ../Downloader/downloads/mathematics/calculus \
         --email usera@loorio.test --password password123
@@ -366,9 +371,10 @@ def upload_video(
         complete_payload["durationMs"] = duration_ms
     if category_id:
         complete_payload["categoryId"] = category_id
-    thumbnail_url = record.get("thumbnail_url")
-    if thumbnail_url:
-        complete_payload["thumbnailUrl"] = thumbnail_url
+    # Note: we intentionally do NOT forward record["thumbnail_url"]. It points at
+    # TikTok's CDN, and Loorio rejects it ("thumbnailUrl does not belong to this
+    # user") because a thumbnail must live in the uploader's own object storage.
+    # Letting the backend derive/generate the thumbnail avoids the 400.
 
     complete = expect_ok(
         post_json(session, f"{base}/videos/upload/complete", complete_payload, token=token),

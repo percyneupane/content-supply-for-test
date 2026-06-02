@@ -195,6 +195,54 @@
         { "name": "Medicine Explained", "slug": "medicine-explained", "hashtags": ["medicine", "medicaltok", "medtok", "doctorsoftiktok", "medicalfacts"], "keywords": ["medicine", "medical", "disease", "symptom", "treatment"] },
         { "name": "Health Myths", "slug": "health-myths", "hashtags": ["healthmyths", "mythbusting", "healthfacts", "debunked", "health"], "keywords": ["health myth", "myth", "debunked", "misconception", "truth about"] }
       ]
+    },
+    {
+      "name": "Philosophy",
+      "slug": "philosophy",
+      "topics": [
+        { "name": "Philosophy Foundations", "slug": "philosophy-foundations", "hashtags": ["philosophy", "philosophytok", "philosophybasics", "learnphilosophy", "philosophical"], "keywords": ["philosophy", "philosophical", "philosopher", "wisdom", "big questions"] },
+        { "name": "Ancient Philosophy", "slug": "ancient-philosophy", "hashtags": ["ancientphilosophy", "socrates", "plato", "aristotle", "philosophy"], "keywords": ["ancient philosophy", "socrates", "plato", "aristotle", "greek philosophy"] },
+        { "name": "Stoicism", "slug": "stoicism", "hashtags": ["stoicism", "stoic", "marcusaurelius", "stoicphilosophy", "seneca"], "keywords": ["stoicism", "stoic", "marcus aurelius", "seneca", "epictetus"] },
+        { "name": "Ethics & Morality", "slug": "ethics-morality", "hashtags": ["ethics", "morality", "moralphilosophy", "philosophy", "moraldilemma"], "keywords": ["ethics", "morality", "moral", "right and wrong", "virtue"] },
+        { "name": "Existentialism", "slug": "existentialism", "hashtags": ["existentialism", "existential", "nietzsche", "camus", "sartre"], "keywords": ["existentialism", "existential", "nietzsche", "camus", "sartre"] },
+        { "name": "Metaphysics", "slug": "metaphysics", "hashtags": ["metaphysics", "philosophy", "reality", "consciousness", "existence"], "keywords": ["metaphysics", "reality", "existence", "consciousness", "free will"] },
+        { "name": "Epistemology", "slug": "epistemology", "hashtags": ["epistemology", "philosophy", "knowledge", "truth", "logic"], "keywords": ["epistemology", "knowledge", "truth", "belief", "what is real"] },
+        { "name": "Logic & Critical Thinking", "slug": "logic-critical-thinking", "hashtags": ["logic", "criticalthinking", "logicalfallacies", "reasoning", "philosophy"], "keywords": ["logic", "critical thinking", "logical fallacy", "reasoning", "argument"] },
+        { "name": "Eastern Philosophy", "slug": "eastern-philosophy", "hashtags": ["easternphilosophy", "buddhism", "taoism", "zen", "philosophy"], "keywords": ["eastern philosophy", "buddhism", "taoism", "zen", "confucius"] },
+        { "name": "Political Philosophy", "slug": "political-philosophy", "hashtags": ["politicalphilosophy", "philosophy", "justice", "freedom", "philosophytok"], "keywords": ["political philosophy", "justice", "social contract", "liberty", "rights"] }
+      ]
+    },
+    {
+      "name": "Literature",
+      "slug": "literature",
+      "topics": [
+        { "name": "Literature Foundations", "slug": "literature-foundations", "hashtags": ["literature", "booktok", "classicliterature", "literarytok", "books"], "keywords": ["literature", "literary", "classic novel", "literary analysis", "great books"] },
+        { "name": "Classic Novels", "slug": "classic-novels", "hashtags": ["classicbooks", "classicliterature", "classicnovels", "booktok", "literature"], "keywords": ["classic novel", "classic book", "classic literature", "literary classic", "canon"] },
+        { "name": "Poetry", "slug": "poetry", "hashtags": ["poetry", "poetrytok", "poems", "poet", "spokenword"], "keywords": ["poetry", "poem", "poet", "verse", "stanza"] },
+        { "name": "Shakespeare", "slug": "shakespeare", "hashtags": ["shakespeare", "shakespearean", "hamlet", "macbeth", "literature"], "keywords": ["shakespeare", "shakespearean", "hamlet", "macbeth", "sonnet"] },
+        { "name": "Literary Analysis", "slug": "literary-analysis", "hashtags": ["literaryanalysis", "bookanalysis", "literature", "englishclass", "booktok"], "keywords": ["literary analysis", "theme", "symbolism", "literary device", "close reading"] },
+        { "name": "Creative Writing", "slug": "creative-writing", "hashtags": ["creativewriting", "writingtips", "writertok", "writingcommunity", "amwriting"], "keywords": ["creative writing", "writing tips", "storytelling", "writing craft", "narrative"] },
+        { "name": "Mythology & Folklore", "slug": "mythology-folklore", "hashtags": ["mythology", "greekmythology", "folklore", "myths", "mythologytok"], "keywords": ["mythology", "myth", "folklore", "legend", "greek mythology"] },
+        { "name": "Literary Movements", "slug": "literary-movements", "hashtags": ["literature", "romanticism", "modernism", "literarymovements", "literaryhistory"], "keywords": ["literary movement", "romanticism", "modernism", "realism", "renaissance"] },
+        { "name": "Book Recommendations", "slug": "book-recommendations", "hashtags": ["bookrecommendations", "booktok", "bookrecs", "mustread", "readinglist"], "keywords": ["book recommendation", "must read", "reading list", "book recs", "what to read"] },
+        { "name": "Authors & Biographies", "slug": "authors-biographies", "hashtags": ["authors", "writers", "famousauthors", "literature", "booktok"], "keywords": ["author", "writer", "famous author", "novelist", "life of"] }
+      ]
+    },
+    {
+      "name": "Arts & Design",
+      "slug": "arts-design",
+      "topics": [
+        { "name": "Art Foundations", "slug": "art-foundations", "hashtags": ["art", "arttok", "artbasics", "learnart", "arteducation"], "keywords": ["art basics", "elements of art", "art fundamentals", "learn art", "art education"] },
+        { "name": "Art History", "slug": "art-history", "hashtags": ["arthistory", "arthistorytok", "famouspaintings", "artmovement", "fineart"], "keywords": ["art history", "famous painting", "art movement", "renaissance art", "masterpiece"] },
+        { "name": "Drawing & Sketching", "slug": "drawing-sketching", "hashtags": ["drawing", "sketching", "howtodraw", "drawingtutorial", "arttok"], "keywords": ["drawing", "sketch", "how to draw", "pencil drawing", "drawing tutorial"] },
+        { "name": "Painting", "slug": "painting", "hashtags": ["painting", "acrylicpainting", "watercolor", "oilpainting", "paintingtutorial"], "keywords": ["painting", "acrylic", "watercolor", "oil paint", "canvas"] },
+        { "name": "Digital Art & Illustration", "slug": "digital-art-illustration", "hashtags": ["digitalart", "illustration", "procreate", "digitalillustration", "digitalpainting"], "keywords": ["digital art", "illustration", "procreate", "digital painting", "concept art"] },
+        { "name": "Graphic Design", "slug": "graphic-design", "hashtags": ["graphicdesign", "design", "graphicdesigner", "designtips", "branding"], "keywords": ["graphic design", "logo", "typography", "branding", "layout"] },
+        { "name": "Color & Composition", "slug": "color-composition", "hashtags": ["colortheory", "composition", "designprinciples", "art", "designtips"], "keywords": ["color theory", "composition", "color palette", "design principles", "visual balance"] },
+        { "name": "Photography", "slug": "photography", "hashtags": ["photography", "photographytips", "phototok", "photographer", "photographytutorial"], "keywords": ["photography", "photo", "camera", "composition", "lighting"] },
+        { "name": "Architecture & Interiors", "slug": "architecture-interiors", "hashtags": ["architecture", "interiordesign", "architecturaldesign", "designtok", "architect"], "keywords": ["architecture", "interior design", "building design", "architect", "space design"] },
+        { "name": "Crafts & DIY", "slug": "crafts-diy", "hashtags": ["crafts", "diy", "diycrafts", "handmade", "crafttok"], "keywords": ["craft", "diy", "handmade", "craft project", "do it yourself"] }
+      ]
     }
   ]
 }
