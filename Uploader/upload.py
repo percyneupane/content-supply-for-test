@@ -15,9 +15,10 @@ The downloader writes a two-level layout, one folder per topic:
 
     downloads/<category-slug>/<topic-slug>/metadata.json
 
-Each record stores 'topic_slug' and 'category_slug'. With --all this script
-walks that tree, auto-resolves the topic per record (no need to pass --topic
-once per folder), and falls back to the folder name if a record lacks the slug.
+Each record stores 'category_slug' (and a legacy 'topic_slug' from the folder
+layout). With --all this script walks that tree, auto-resolves the category per
+record (no need to pass --category), and falls back to the category-slug folder
+name if a record lacks the slug.
 Old single-folder manifests still work via --path <folder> without --all.
 
 Local dev usage:
@@ -30,9 +31,9 @@ Local dev usage:
     python upload.py --path ../Downloader/downloads --all \
         --email usera@loorio.test --password password123
 
-    # Force a single topic onto everything (legacy override):
+    # Force a single category onto everything (override):
     python upload.py --path ../Downloader/downloads/Finance \
-        --topic general --category finance-economics \
+        --category finance-economics \
         --email finance@loorio.com --password 'finance@loorio'
 """
 
@@ -52,7 +53,7 @@ import requests
 # SETTINGS
 # ==========================
 
-DEFAULT_BASE_URL = "http://localhost:3000"
+DEFAULT_BASE_URL = "https://api.loorio.com"
 METADATA_FILENAME = "metadata.json"
 LEDGER_FILENAME = "uploaded.json"
 
@@ -143,7 +144,7 @@ def ensure_profile(session: requests.Session, base: str, token: str, username: s
 
 
 # ==========================
-# TOPIC RESOLUTION
+# CATEGORY RESOLUTION
 # ==========================
 
 def fetch_categories(session: requests.Session, base: str, token: str) -> list:
@@ -156,78 +157,52 @@ def fetch_categories(session: requests.Session, base: str, token: str) -> list:
     return data if isinstance(data, list) else []
 
 
-def build_topic_index(session: requests.Session, base: str, token: str) -> dict:
+def build_category_index(session: requests.Session, base: str, token: str) -> dict:
     """
-    Fetches /categories once and indexes topics by both slug and name (lowercased)
-    so per-record resolution is just a dict lookup.
+    Fetches /categories once and indexes category ids by both slug and name
+    (lowercased) so per-record resolution is just a dict lookup.
 
-        index[key] -> list of { category_slug, category_name, topic_slug,
-                                topic_name, topic_id }
+    Loorio removed topics from its taxonomy; videos now attach directly to a
+    category, so this is all the resolution the upload flow needs.
+
+        index[key] -> category_id
     """
 
     index: dict = {}
     for category in fetch_categories(session, base, token):
-        category_slug = str(category.get("slug") or "").lower()
-        category_name = str(category.get("name") or "")
-
-        for topic in category.get("topics", []):
-            entry = {
-                "category_slug": category_slug,
-                "category_name": category_name,
-                "topic_slug": str(topic.get("slug") or "").lower(),
-                "topic_name": str(topic.get("name") or ""),
-                "topic_id": topic["id"],
-            }
-            for key in {entry["topic_slug"], entry["topic_name"].lower()}:
-                if key:
-                    index.setdefault(key, []).append(entry)
+        category_id = category.get("id")
+        if not category_id:
+            continue
+        for key in {str(category.get("slug") or "").lower(), str(category.get("name") or "").lower()}:
+            if key:
+                index[key] = category_id
 
     return index
 
 
-def resolve_via_index(index: dict, topic_hint: str, category_hint: Optional[str]) -> str:
-    """Returns the topic_id matching topic_hint, narrowed by category_hint if given."""
+def resolve_category_id(index: dict, category_hint: str) -> str:
+    """Returns the category_id matching category_hint (name or slug)."""
 
-    needle = (topic_hint or "").lower()
+    needle = (category_hint or "").lower()
     if not needle or needle not in index:
-        raise RuntimeError(f"Topic '{topic_hint}' not found in Loorio's taxonomy.")
+        raise RuntimeError(f"Category '{category_hint}' not found in Loorio's taxonomy.")
 
-    candidates = index[needle]
-
-    if category_hint:
-        cat = category_hint.lower()
-        candidates = [
-            e for e in candidates
-            if cat in {e["category_slug"], e["category_name"].lower()}
-        ]
-        if not candidates:
-            raise RuntimeError(f"Topic '{topic_hint}' not found inside category '{category_hint}'.")
-
-    if len(candidates) > 1:
-        where = ", ".join(f"{e['category_name']}/{e['topic_name']}" for e in candidates)
-        raise RuntimeError(
-            f"Topic '{topic_hint}' is ambiguous ({where}). "
-            "Pass --category or set 'category_slug' in the manifest record."
-        )
-
-    return candidates[0]["topic_id"]
+    return index[needle]
 
 
-def topic_hints_from_record(record: dict, directory: Path) -> tuple:
+def category_hint_from_record(record: dict, directory: Path) -> str:
     """
-    Returns (topic_hint, category_hint) for resolution. Prefers the record's
-    explicit slugs; falls back to the folder names from the layout
-    <...>/<category-slug>/<topic-slug>/.
+    Returns the category hint for resolution. Prefers the record's explicit
+    category slug/name; falls back to the category-slug folder in the layout
+    <...>/<category-slug>/<topic-slug>/ (the directory's parent).
     """
 
-    topic_hint = record.get("topic_slug") or record.get("topic_name") or directory.name
-    category_hint = (
+    return (
         record.get("category_slug")
         or record.get("category_name")
         or record.get("category")  # legacy field
         or directory.parent.name
     )
-    return topic_hint, category_hint
 
 
 def build_caption(record: dict, fallback: str) -> str:
@@ -332,7 +307,7 @@ def upload_video(
     token: str,
     video_path: Path,
     record: dict,
-    topic_id: Optional[str],
+    category_id: Optional[str],
     learning_mode: bool,
 ) -> str:
     file_size = video_path.stat().st_size
@@ -389,8 +364,8 @@ def upload_video(
         complete_payload["caption"] = caption[:1000]
     if duration_ms:
         complete_payload["durationMs"] = duration_ms
-    if topic_id:
-        complete_payload["topicId"] = topic_id
+    if category_id:
+        complete_payload["categoryId"] = category_id
     thumbnail_url = record.get("thumbnail_url")
     if thumbnail_url:
         complete_payload["thumbnailUrl"] = thumbnail_url
@@ -413,16 +388,16 @@ def process_directory(
     token: str,
     directory: Path,
     args,
-    override_topic_id: Optional[str],
-    topic_index: Optional[dict],
+    override_category_id: Optional[str],
+    category_index: Optional[dict],
 ) -> tuple:
     """
     Uploads every video listed in directory/metadata.json.
 
-    Topic resolution per record:
-      1. override_topic_id (from --topic / --topic-id) wins for the whole run.
-      2. Otherwise, the record's topic_slug/category_slug (or folder name
-         fallback) is looked up in topic_index.
+    Category resolution per record:
+      1. override_category_id (from --category) wins for the whole run.
+      2. Otherwise, the record's category_slug/name (or folder name
+         fallback) is looked up in category_index.
       3. If neither route yields an id, the record is skipped with a warning.
 
     Returns (ok, skipped, failed).
@@ -462,18 +437,18 @@ def process_directory(
             skipped += 1
             continue
 
-        # Resolve the topic for THIS record (cheap dict lookup once index is built).
-        record_topic_id = override_topic_id
-        if not record_topic_id and topic_index is not None:
-            topic_hint, category_hint = topic_hints_from_record(record, directory)
+        # Resolve the category for THIS record (cheap dict lookup once index is built).
+        record_category_id = override_category_id
+        if not record_category_id and category_index is not None:
+            category_hint = category_hint_from_record(record, directory)
             try:
-                record_topic_id = resolve_via_index(topic_index, topic_hint, category_hint)
+                record_category_id = resolve_category_id(category_index, category_hint)
             except RuntimeError as error:
-                log(f"[{index}] Topic resolution failed for {file_name}: {error}")
+                log(f"[{index}] Category resolution failed for {file_name}: {error}")
                 skipped += 1
                 continue
 
-        log(f"[{index}/{len(records)}] Uploading {file_name} (topic={record_topic_id or '-'}) ...")
+        log(f"[{index}/{len(records)}] Uploading {file_name} (category={record_category_id or '-'}) ...")
 
         if args.dry_run:
             caption_preview = build_caption(record, video_path.stem).replace("\n", " ")[:60]
@@ -482,7 +457,7 @@ def process_directory(
             continue
 
         try:
-            new_id = upload_video(session, base, token, video_path, record, record_topic_id, args.learning_mode)
+            new_id = upload_video(session, base, token, video_path, record, record_category_id, args.learning_mode)
         except (RuntimeError, requests.RequestException) as error:
             log(f"    FAILED: {error}")
             failed += 1
@@ -490,7 +465,7 @@ def process_directory(
 
         ledger[video_id] = {
             "videoId": new_id,
-            "topicId": record_topic_id,
+            "categoryId": record_category_id,
             "uploadedAt": datetime.now(timezone.utc).isoformat(),
         }
         save_ledger(ledger_path, ledger)
@@ -513,9 +488,7 @@ def parse_args(argv) -> argparse.Namespace:
     parser.add_argument("--username", help="Profile username if one must be created (default: email local part).")
     parser.add_argument("--bio", default="", help="Profile bio used only when creating a profile.")
     parser.add_argument("--register", action="store_true", help="Register the account first (ignores 'already exists').")
-    parser.add_argument("--topic", help="Override: force every video in this run onto this topic (name or slug).")
-    parser.add_argument("--topic-id", help="Override: topic UUID, used directly (takes precedence over --topic).")
-    parser.add_argument("--category", help="Category name/slug to disambiguate --topic when needed.")
+    parser.add_argument("--category", help="Override: force every video in this run onto this category (name or slug). Without it, each record's category_slug/name from metadata.json is used.")
     parser.add_argument(
         "--learning-mode",
         action=argparse.BooleanOptionalAction,
@@ -541,8 +514,8 @@ def main(argv=None) -> int:
 
     session = requests.Session()
 
-    override_topic_id: Optional[str] = args.topic_id
-    topic_index: Optional[dict] = None
+    override_category_id: Optional[str] = None
+    category_index: Optional[dict] = None
     token = "DRY-RUN"
 
     if not args.dry_run:
@@ -552,19 +525,19 @@ def main(argv=None) -> int:
             token = login(session, base, args.email, args.password)
             ensure_profile(session, base, token, username, args.bio)
 
-            # Build the topic index once. Even if the user passed --topic, we
-            # still need it to resolve that hint into an id.
-            topic_index = build_topic_index(session, base, token)
-            log(f"Loaded topic index ({sum(len(v) for v in topic_index.values())} entries).")
+            # Build the category index once. Even if the user passed --category,
+            # we still need it to resolve that hint into an id.
+            category_index = build_category_index(session, base, token)
+            log(f"Loaded category index ({len(category_index)} entries).")
 
-            if not override_topic_id and args.topic:
-                override_topic_id = resolve_via_index(topic_index, args.topic, args.category)
-                log(f"Resolved override topic '{args.topic}' -> {override_topic_id}")
+            if args.category:
+                override_category_id = resolve_category_id(category_index, args.category)
+                log(f"Resolved override category '{args.category}' -> {override_category_id}")
         except (RuntimeError, requests.RequestException) as error:
             log(f"Setup failed: {error}")
             return 1
     else:
-        log("Dry run: skipping auth and topic resolution.")
+        log("Dry run: skipping auth and category resolution.")
 
     directories = find_manifest_dirs(root, args.all)
     if not directories:
@@ -574,7 +547,7 @@ def main(argv=None) -> int:
 
     total_ok = total_skipped = total_failed = 0
     for directory in directories:
-        ok, skipped, failed = process_directory(session, base, token, directory, args, override_topic_id, topic_index)
+        ok, skipped, failed = process_directory(session, base, token, directory, args, override_category_id, category_index)
         total_ok += ok
         total_skipped += skipped
         total_failed += failed
