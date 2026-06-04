@@ -47,6 +47,7 @@ import json
 import shutil
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -63,8 +64,18 @@ METADATA_FILENAME = "metadata.json"
 LEDGER_FILENAME = "uploaded.json"
 
 DEFAULT_MIME_TYPE = "video/mp4"
-API_TIMEOUT_SECONDS = 60
-UPLOAD_TIMEOUT_SECONDS = 600
+# Separate connect vs read timeouts: fail fast on a dead host, but give slow
+# backend responses room to breathe. Values are (connect, read) seconds.
+API_TIMEOUT_SECONDS = (10, 60)
+# /videos/upload/complete triggers synchronous server-side work (object
+# validation, thumbnail derivation, transcode kickoff), so it needs a much
+# longer read timeout than the other JSON endpoints.
+COMPLETE_TIMEOUT_SECONDS = (10, 300)
+UPLOAD_TIMEOUT_SECONDS = (10, 600)
+
+# Retry policy for transient failures (timeouts, connection errors, 5xx).
+MAX_RETRIES = 3
+RETRY_BACKOFF_SECONDS = 2.0
 
 
 def log(text: str):
@@ -75,12 +86,70 @@ def log(text: str):
 # HTTP HELPERS
 # ==========================
 
-def post_json(session: requests.Session, url: str, payload: dict, token: Optional[str] = None) -> requests.Response:
+def _is_retryable_status(status_code: int) -> bool:
+    """5xx (and 429) are transient: the server may succeed on a later attempt."""
+    return status_code >= 500 or status_code == 429
+
+
+def request_with_retries(send, action: str) -> requests.Response:
+    """
+    Calls `send()` (a zero-arg callable returning a Response), retrying on
+    transient failures: connection errors, read/connect timeouts, and 5xx/429
+    responses. Uses exponential backoff. Non-retryable HTTP responses (e.g. 4xx)
+    are returned as-is for the caller to handle via expect_ok.
+
+    Note on idempotency: callers that POST non-idempotent operations should only
+    use this when a repeated request is safe. /videos/upload/complete is treated
+    as safe here on the assumption the backend dedupes by rawS3Key; if it does
+    not, a timed-out-but-actually-succeeded complete could be retried. See the
+    call site for the guard.
+    """
+    last_error: Optional[Exception] = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            response = send()
+        except (requests.Timeout, requests.ConnectionError) as error:
+            last_error = error
+            if attempt == MAX_RETRIES:
+                break
+            delay = RETRY_BACKOFF_SECONDS * (2 ** (attempt - 1))
+            log(f"    {action}: transient network error ({error}); "
+                f"retry {attempt}/{MAX_RETRIES - 1} in {delay:.0f}s")
+            time.sleep(delay)
+            continue
+
+        if _is_retryable_status(response.status_code) and attempt < MAX_RETRIES:
+            delay = RETRY_BACKOFF_SECONDS * (2 ** (attempt - 1))
+            log(f"    {action}: HTTP {response.status_code}; "
+                f"retry {attempt}/{MAX_RETRIES - 1} in {delay:.0f}s")
+            time.sleep(delay)
+            continue
+
+        return response
+
+    # Exhausted retries on a network error.
+    raise requests.RequestException(
+        f"{action} failed after {MAX_RETRIES} attempts: {last_error}"
+    )
+
+
+def post_json(
+    session: requests.Session,
+    url: str,
+    payload: dict,
+    token: Optional[str] = None,
+    timeout=API_TIMEOUT_SECONDS,
+    action: str = "Request",
+) -> requests.Response:
     headers = {"Content-Type": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
 
-    return session.post(url, json=payload, headers=headers, timeout=API_TIMEOUT_SECONDS)
+    return request_with_retries(
+        lambda: session.post(url, json=payload, headers=headers, timeout=timeout),
+        action,
+    )
 
 
 def expect_ok(response: requests.Response, action: str) -> dict:
@@ -129,10 +198,13 @@ def login(session: requests.Session, base: str, email: str, password: str) -> st
 def ensure_profile(session: requests.Session, base: str, token: str, username: str, bio: str):
     """Creates a profile only if the account doesn't already have one."""
 
-    me = session.get(
-        f"{base}/users/me",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=API_TIMEOUT_SECONDS,
+    me = request_with_retries(
+        lambda: session.get(
+            f"{base}/users/me",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=API_TIMEOUT_SECONDS,
+        ),
+        "Fetch profile",
     )
 
     if me.ok:
@@ -153,10 +225,13 @@ def ensure_profile(session: requests.Session, base: str, token: str, username: s
 # ==========================
 
 def fetch_categories(session: requests.Session, base: str, token: str) -> list:
-    response = session.get(
-        f"{base}/categories",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=API_TIMEOUT_SECONDS,
+    response = request_with_retries(
+        lambda: session.get(
+            f"{base}/categories",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=API_TIMEOUT_SECONDS,
+        ),
+        "Fetch categories",
     )
     data = expect_ok(response, "Fetch categories")
     return data if isinstance(data, list) else []
@@ -335,7 +410,10 @@ def upload_video(
         init_payload["durationMs"] = duration_ms
 
     init = expect_ok(
-        post_json(session, f"{base}/videos/upload/init", init_payload, token=token),
+        post_json(
+            session, f"{base}/videos/upload/init", init_payload, token=token,
+            action="Upload init",
+        ),
         "Upload init",
     )
     upload_url = init.get("uploadUrl")
@@ -376,8 +454,17 @@ def upload_video(
     # user") because a thumbnail must live in the uploader's own object storage.
     # Letting the backend derive/generate the thumbnail avoids the 400.
 
+    # The raw bytes are already in storage at this point, so a timed-out
+    # "complete" is the case most worth retrying. COMPLETE_TIMEOUT_SECONDS gives
+    # the backend room for its synchronous post-upload processing before we even
+    # consider a retry. Retries assume the backend dedupes by rawS3Key; if it
+    # does not, a complete that succeeded server-side but timed out on the
+    # response could produce a duplicate video. Verify this against the backend.
     complete = expect_ok(
-        post_json(session, f"{base}/videos/upload/complete", complete_payload, token=token),
+        post_json(
+            session, f"{base}/videos/upload/complete", complete_payload, token=token,
+            timeout=COMPLETE_TIMEOUT_SECONDS, action="Upload complete",
+        ),
         "Upload complete",
     )
 
